@@ -1,16 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: crossplane-resources
+  name: crossplane-providers
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/jaruwat-panturat/k8s-lab.git
     targetRevision: main
-    path: crossplane
-    directory:
-      recurse: true
+    path: crossplane/providers
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
