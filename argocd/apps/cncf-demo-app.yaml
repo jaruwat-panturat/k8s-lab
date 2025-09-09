@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/jaruwat-panturat/pacman-for-k8s.git
+    repoURL: https://github.com/jaruwat-panturat/k8s-lab.git
     targetRevision: main
-    path: .
+    path: cncfDemo
   destination:
     server: https://kubernetes.default.svc
     namespace: cncf-demo
