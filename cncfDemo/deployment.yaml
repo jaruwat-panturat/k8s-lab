@@ -16,7 +16,10 @@ spec:
     spec:
       containers:
       - name: demo-app-container
-        image: nginx:alpine
+        image: nginxdemos/hello
+        env:
+        - name: BG_COLOR
+          value: "#87ceeb"   # sky blue background
         ports:
         - containerPort: 80
 
