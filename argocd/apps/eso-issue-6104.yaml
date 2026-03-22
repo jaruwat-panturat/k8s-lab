@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: eso-issue-6104
+
+---
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: fake-store
+  namespace: eso-issue-6104
+spec:
+  provider:
+    fake:
+      data:
+      - key: /my/config
+        value: '{"host":"localhost","port":"5432","db":"mydb"}'
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: my-configmap-es
+  namespace: eso-issue-6104
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: fake-store
+    kind: SecretStore
+  target:
+    name: my-config
+    manifest:
+      apiVersion: v1
+      kind: ConfigMap
+  dataFrom:
+  - extract:
+      key: /my/config
