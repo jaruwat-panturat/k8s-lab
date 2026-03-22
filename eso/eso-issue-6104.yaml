@@ -22,7 +22,7 @@ metadata:
   name: my-configmap-es
   namespace: eso-issue-6104
 spec:
-  refreshInterval: 1h
+  refreshInterval: 10s
   secretStoreRef:
     name: fake-store
     kind: SecretStore
