@@ -34,3 +34,33 @@ spec:
   dataFrom:
   - extract:
       key: /my/config
+---
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: fake-store-secret
+  namespace: eso-issue-6104
+spec:
+  provider:
+    fake:
+      data:
+      - key: /my/credentials
+        value: '{"username":"admin","password":"s3cr3t"}'
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: my-secret-es
+  namespace: eso-issue-6104
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: fake-store-secret
+    kind: SecretStore
+  target:
+    name: my-credentials
+    creationPolicy: Owner
+  dataFrom:
+  - extract:
+      key: /my/credentials
+
