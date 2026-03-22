@@ -12,7 +12,4 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: eso-issue-6104
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  syncPolicy: {}
