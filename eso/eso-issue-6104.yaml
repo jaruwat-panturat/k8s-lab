@@ -34,3 +34,60 @@ spec:
   dataFrom:
   - extract:
       key: /my/config
+---
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: fake-store
+  namespace: eso-issue-6104-improve
+spec:
+  provider:
+    fake:
+      data:
+        - key: "app-config"
+          value: "some-config-value"
+        - key: "db-host"
+          value: "localhost:5432"
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: test-configmap
+  namespace: eso-issue-6104-improve
+spec:
+  secretStoreRef:
+    name: fake-store
+    kind: SecretStore
+  target:
+    name: test-configmap
+    creationPolicy: Owner
+    manifest:
+      apiVersion: v1
+      kind: ConfigMap
+  data:
+    - secretKey: app-config
+      remoteRef:
+        key: "app-config"
+    - secretKey: db-host
+      remoteRef:
+        key: "db-host"
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: test-secret
+  namespace: eso-issue-6104-improve
+spec:
+  secretStoreRef:
+    name: fake-store
+    kind: SecretStore
+  target:
+    name: test-secret
+    creationPolicy: Owner
+  data:
+    - secretKey: api-key
+      remoteRef:
+        key: "app-config"
+    - secretKey: db-host
+      remoteRef:
+        key: "db-host"
